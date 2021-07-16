@@ -1,0 +1,15 @@
+{% extends '_base.html' %}
+
+{% block title %}Feed{% endblock title %}
+
+{% block content %}
+    <ul>
+        {%for post in posts%}
+            <div>
+                <li><a href="{% url 'post_detail' post.slug %}">{{post.description}}</a></li>
+            </div>
+        {% endfor %}
+    </ul>
+<h1><a href="{% url 'post_create' %}">create</a></h1>
+
+{% endblock content %}

@@ -11,17 +11,14 @@ class Artist(AbstractUser):
     """Модель для райтеров"""
     username = models.CharField(max_length=200,unique=True)
     graffiti_name = models.CharField(('Ник райтера'),max_length=200)
-    slug = models.SlugField
+    slug = models.SlugField(unique = True,default= str(username))
     email = models.EmailField(('E-mail'), max_length=254,unique=True)
     profile_image = models.ImageField(('Фото профиля'), blank=True)
     tag_image = models.ImageField(('Фото тэга'), blank=True)
     inst_url = models.URLField(('Instagram'))
     fb_url = models.URLField(('Facebook'))
-    crew = models.ForeignKey(Crew, related_name='artists', on_delete=models.CASCADE)
+    crew = models.ForeignKey(Crew, related_name='artists',null=True, on_delete=models.CASCADE)
     
-    #Неиспользуемые поля из родительского класса
-    last_name = None
-    is_staff = None
 
     class Meta:
         verbose_name = ('Райтер')

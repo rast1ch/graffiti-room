@@ -1,0 +1,8 @@
+{% extends '_base.html' %}
+
+{% block title %}Post{% endblock title %}
+
+{% block content %}
+    <p>{{object.description}}</p>
+    <p><a href="{% url 'post_delete' object.slug%}"> Delete the POst</a></p>
+{% endblock content %}
