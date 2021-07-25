@@ -1,8 +1,10 @@
 {% extends '_base.html' %}
+{% load static %}
 
 {% block title %}Feed{% endblock title %}
 
 {% block content %}
+    <h1><a href="{% url 'artist_posts' user.slug %}">{{ user.username }}</a></h1>
     <ul>
         {%for post in posts%}
             <div>
