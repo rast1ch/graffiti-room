@@ -6,10 +6,10 @@ class ImageInline(admin.StackedInline):
     model = Image
 
 class PostAdminModel(admin.ModelAdmin):
-    fields = ['user','slug','description','likes','active']
+    fields = ['author','slug','description','likes','active']
     ordering = ('uploaded',)
     inlines = [ImageInline]
-    list_display= ['user', 'slug', 'description', 'active']
+    list_display= ['author', 'slug', 'description', 'active']
 
 admin.site.register(Post,PostAdminModel)
 admin.site.register(Image)

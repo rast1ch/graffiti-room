@@ -1,17 +1,25 @@
 {% extends '_base.html' %}
 {% load static %}
 
-{% block title %}Feed{% endblock title %}
-
+{% block title %}Лента{% endblock title %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/feed.css' %}">
+{% endblock %}
 {% block content %}
-    <h1><a href="{% url 'artist_posts' user.slug %}">{{ user.username }}</a></h1>
-    <ul>
-        {%for post in posts%}
-            <div>
-                <li><a href="{% url 'post_detail' post.slug %}">{{post.description}}</a></li>
-            </div>
-        {% endfor %}
-    </ul>
+
+    {% for post in posts %}
+        <div class="card post">
+        <div class="card-header">
+            <a href="{% url 'artist_posts' post.author.slug%}" class="username header">{{ post.author.username }}</a>
+        </div>
+        {% with i=post.images.all|first %}
+            <a href="{% url 'post_detail' post.slug %}"> <img class="post-image card-img" src="{{ i.img.url }}" alt="{{ post.description }}"></a>
+        {% endwith %}
+        <div class="card-body post-description">
+            <p class="card-text"><a href="{% url 'artist_posts' post.author.slug%}" class="username">{{ post.author.username }}</a>: {{ post.description }}</p>
+        </div>
+        </div>
+    {% endfor %}
 <h1><a href="{% url 'post_create' %}">create</a></h1>
 
 {% endblock content %}

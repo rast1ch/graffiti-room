@@ -1,0 +1,28 @@
+.content{
+    width:100%;
+}
+.post{
+    display: table;
+    width:50%;
+    margin: 10px auto;
+}
+.post-image{
+    max-width: 100%;
+}
+.post-description{
+    border-top: 1px solid lightgray;
+}
+.header{
+    font-size: large;
+}
+.username{
+    text-decoration: none;
+    color:black;
+    font-weight: bolder;
+}
+.username:hover{
+    color:black;
+}
+.username:visited{
+    color:black;
+}

@@ -6,7 +6,8 @@ from django.urls import reverse
 from django.views.generic import (
     ListView,
     DetailView,
-    TemplateView
+    TemplateView,
+    RedirectView,
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
@@ -22,12 +23,12 @@ def rand_slug(model):
     random_slug = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(6))
     for i in model.objects.all():  # Перебор и рекурсия на случай совпадения,
         if random_slug == i.slug:  # хоть там 1,340,095,640,625 вариантов, но мало ли
-            rand_slug()
+            rand_slug(model)
     else:
         return random_slug
 
 
-class PostListView(LoginRequiredMixin,ListView):
+class PostListView(LoginRequiredMixin, ListView):
     """View для просмотра списка постов"""
     model = Post
     context_object_name = 'posts'
@@ -39,7 +40,7 @@ class PostListView(LoginRequiredMixin,ListView):
         return context
 
     def get_queryset(self):
-        return super().get_queryset().filter(active=True)
+        return Post.objects.filter(active=True)
 
 
 class PostDetailView(DetailView, LoginRequiredMixin):
@@ -91,3 +92,7 @@ class PostDeleteView(DeleteView, LoginRequiredMixin):
     model = Post
     success_url = reverse_lazy('feed')
     template_name = 'feed/post_delete.html'
+
+
+class FeedRedirectView(RedirectView):
+    url = reverse_lazy('feed')

@@ -1,0 +1,11 @@
+.images{
+    display: block;
+    text-align: center;
+    width: 75%;
+    height: 150px;
+
+}
+.post-images{
+    max-height: 100%;
+    max-width:100%;
+}
