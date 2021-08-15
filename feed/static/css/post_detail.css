@@ -1,3 +1,16 @@
+#carouselExampleSlidesOnly .carousel-item {
+    height: 450px;
+}
+.carousel{
+    position: relative;
+    margin:auto;
+    height: 500px !important;
+    width: inherit !important;
+    background-color: lightgray !important;
+}
+.carousel-control-next-icon{
+    color:black !important;
+}
 .images{
     display: block;
     text-align: center;
@@ -5,7 +18,12 @@
     height: 150px;
 
 }
+.description{
+    text-align: left;
+}
+.card{
+    width:75%;
+}
 .post-images{
-    max-height: 100%;
-    max-width:100%;
+    max-height: 500px;
 }

@@ -4,27 +4,48 @@
 {% block title %}Post{% endblock title %}
 {% block styles %}
     <link rel="stylesheet" href="{% static 'css/post_detail.css' %}">
-{% endblock styles%}
+{% endblock styles %}
 {% block content %}
-    <div id="carouselExampleControls" class="carousel slide images" data-bs-ride="carousel">
-  <div class="carousel-inner">
-      {% for i in object.images.all %}
+    <div class="card">
+        <div class="card-header">
+            <img src="https://scontent-mia1-2.cdninstagram.com/t51.2885-19/11351720_883119395071375_1326111195_a.jpg"
+                 class="card-user-image">
+            <a class="card-user-name"
+               href="{% url 'artist_posts' object.author.slug %}"> {{ object.author.username }} </a>
+        </div>
+        <div class="card-image">
+            <div id="carouselExampleControls" class="carousel slide images" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for i in object.images.all %}
 
-    <div class="carousel-item{% if forloop.counter == 1 %} active{% endif %}">
-        <img src="{{ i.img.url }}" class="post-images" alt>
+                        <div class="carousel-item{% if forloop.counter == 1 %} active{% endif %}">
+                            <img src="{{ i.img.url }}" class="post-images" alt>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                        data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                        data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    <div class="card-content" ><div class="description">
+        <p><a href="{% url 'artist_posts' object.author.slug %}">{{ object.author.username }}: </a>{{ object.description }}</p>
     </div>
-       {% endfor %}
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
+    </div>
 
-    <p>{{object.description}}</p>
-    <p><a href="{% url 'post_delete' object.slug%}"> Delete the POst</a></p>
+
+        <div class="description">
+
+        </div>
+    </div>
+
+
+    <p><a href="{% url 'post_delete' object.slug %}"> Delete the POst</a></p>
 {% endblock content %}
