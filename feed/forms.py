@@ -7,18 +7,18 @@ from .models import (
 
 
 class PostModelForm(forms.ModelForm):
-
     class Meta:
         model = Post
-        exclude = ['user','slug','active','likes']
+        exclude = ['user', 'slug', 'active', 'likes']
 
 
 class ImageForm(forms.ModelForm):
     image = forms.ImageField(label='Image')
+
     class Meta:
-        model=Image
+        model = Image
         fields = ('image',)
 
+
 ImageFormSet = modelformset_factory(Image,
-                                        form=ImageForm, extra=3)
-                
+                                    form=ImageForm, extra=3)

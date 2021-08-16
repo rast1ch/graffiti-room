@@ -10,7 +10,7 @@
         <div class="card-header">
             <img src="https://scontent-mia1-2.cdninstagram.com/t51.2885-19/11351720_883119395071375_1326111195_a.jpg"
                  class="card-user-image">
-            <a class="card-user-name"
+            <a class="card-user-name username"
                href="{% url 'artist_posts' object.author.slug %}"> {{ object.author.username }} </a>
         </div>
         <div class="card-image">
@@ -36,7 +36,7 @@
             </div>
         </div>
     <div class="card-content" ><div class="description">
-        <p><a href="{% url 'artist_posts' object.author.slug %}">{{ object.author.username }}: </a>{{ object.description }}</p>
+        <p><a href="{% url 'artist_posts' object.author.slug %}" class="username">{{ object.author.username }}: </a>{{ object.description }}</p>
     </div>
     </div>
 
