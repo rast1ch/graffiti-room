@@ -4,7 +4,7 @@
 .carousel{
     position: relative;
     margin:auto;
-    height: 500px !important;
+    height: 650px !important;
     width: inherit !important;
     background-color: lightgray !important;
 }
@@ -22,8 +22,25 @@
     text-align: left;
 }
 .card{
-    width:75%;
+    margin: 10px auto;
+    width:60%;
+    height: 650px;
+
 }
 .post-images{
-    max-height: 500px;
+    max-height: 650px;
+}
+.card-header{
+    font-size: large !important;
+}
+.username{
+    text-decoration: none;
+    color:black;
+    font-weight: bolder;
+}
+.username:hover{
+    color:black;
+}
+.username:visited{
+    color:black;
 }
