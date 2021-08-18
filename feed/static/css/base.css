@@ -1,3 +1,10 @@
+.header-username{
+    color: #fff222 !important;
+}
+.header-username:hover{
+    color: #fff222 !important;
+    font-weight: bolder !important;
+}
 .title-color{
     color:#000000 !important;
 }

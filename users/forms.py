@@ -14,22 +14,34 @@ class ArtistLoginForm(AuthenticationForm):
 
 
 class ArtistCreationForm(UserCreationForm):
-    email = forms.EmailField(max_length=200)
-    slug = forms.CharField(max_length=200, widget=forms.HiddenInput, required=False)
+    email = forms.EmailField(max_length=200, error_messages={'unique': "Пользователь с таким E-mail уже зарегистрирован"})
+    password1 = forms.CharField(widget=forms.PasswordInput,
+                                label='Пароль',
+                                help_text='Нужно ввести пароль содержащий 8 или более сиволов',
+                                )
+    
+    password2 = forms.CharField(widget=forms.PasswordInput,
+                                label='Подтверждение пароля',)
+    username = forms.CharField(max_length=200, label='Логин', error_messages={'unique': "Пользователь с таким логином уже зарегистрирован"})
+    print(password2.error_messages)
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
+        
         if password1 and password2 and password1 != password2:
             raise ValidationError(
-                self.error_messages['password_mismatch'],
+                "Пароли не совпадают",
                 code='password_mismatch',
             )
         return password2
 
     class Meta:
         model = Artist
-        fields = ('email', 'username', 'slug', 'password1', 'password2')
+        fields = ('email', 'username', 'password1', 'password2')
+
+    
+
 
 
 class ArtistChangeForm(UserChangeForm):

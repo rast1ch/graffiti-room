@@ -1,6 +1,29 @@
-<form action="" method="POST">
-{% csrf_token %}
-{{form.as_p}}
+{%extends '_base.html'%}
+{% load static %}
+{%block title%}
+Регистрация
+{%endblock title%}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/registration.css'%}">
+{% endblock styles %}
 
-<input type="submit" value="Register">
-</form>
+{% block content %}
+    <div class="registration-block">
+        <form action="" method="POST">
+            {% for field in form %}
+               <div class="mb-3 fieldWrapper">
+                   <div class="form-text error">{{ field.errors }}</div>
+                   {{ field.label_tag }} {{ field }}
+                   <div class="form-text">
+                   {% if field.help_text %}
+                       <p class="form-text help">{{ field.help_text|safe }}</p>
+                   {% endif %}
+                   </div>
+               </div>
+            {% endfor %}
+            {% csrf_token %}
+
+            <input type="submit" class="btn btn-success" value="Регистрация">
+        </form>
+    </div>
+{% endblock content %}

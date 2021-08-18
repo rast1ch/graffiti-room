@@ -19,7 +19,13 @@
 
 }
 .description{
+    padding-top: 5px;
     text-align: left;
+    border: 1px solid rgba(0,0,0,.125);
+}
+.card-user-image{
+    width:20px;
+    height:20px;
 }
 .card{
     margin: 10px auto;
@@ -31,9 +37,37 @@
     max-height: 650px;
 }
 .card-header{
+    padding-right: 0 ;
+
     font-size: large !important;
 }
+.header-name{
+    width: 20%;
+    display: inline-block;
+}
+.actions{
+    display: inline-block;
+    width: 79%;
+    text-align: right;
+}
+.change{
+    color:gray;
+    text-decoration: none ;
+}
+.change:hover{
+    font-weight: bolder;
+    color: gray;
+}
+.delete{
+    color:gray;
+    text-decoration: none;
+}
+.delete:hover{
+    color: red;
+    font-weight: bolder;
+}
 .username{
+    margin-left: 5px;
     text-decoration: none;
     color:black;
     font-weight: bolder;

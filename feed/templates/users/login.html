@@ -23,4 +23,10 @@
             <input type="submit" class="btn btn-success" value="Вход">
         </form>
     </div>
+    <div class="error-text">
+    {% if form.errors %}
+    <ul><li>Проверьте правильность ввода логина и пароля</li><ul>
+    {% endif %}
+    </div>
 {% endblock %}
+

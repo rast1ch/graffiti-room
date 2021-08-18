@@ -22,6 +22,7 @@ from django.urls import reverse_lazy
 class ArtistCreateView(CreateView):
     form_class = ArtistCreationForm
     model = Artist
+    print(ArtistCreationForm().errors)
     template_name = 'users/registration.html'
     success_url = reverse_lazy('feed')
 

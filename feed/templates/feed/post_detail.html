@@ -8,10 +8,24 @@
 {% block content %}
     <div class="card">
         <div class="card-header">
-            <img src="https://scontent-mia1-2.cdninstagram.com/t51.2885-19/11351720_883119395071375_1326111195_a.jpg"
+        <div class="header-name">
+        {%if object.author.profile_image%}
+            <img src="{{ object.author.profile_image.url }}"
                  class="card-user-image">
+        {%else%}
+            <img src="{% static 'images/default-avatar.jpg' %}"
+                 class="card-user-image">
+        {%endif%}
             <a class="card-user-name username"
                href="{% url 'artist_posts' object.author.slug %}"> {{ object.author.username }} </a>
+        </div>
+        {% if request.user == object.author%}
+        <div class="actions">
+            <a href="#" class="change">Изменить</a>
+            <span class="change"> | </span>
+            <a href="{% url 'post_delete' object.slug %}" class="delete">Удалить</a>
+        </div>
+               {%endif%}
         </div>
         <div class="card-image">
             <div id="carouselExampleControls" class="carousel slide images" data-bs-ride="carousel">
@@ -46,6 +60,4 @@
         </div>
     </div>
 
-
-    <p><a href="{% url 'post_delete' object.slug %}"> Delete the POst</a></p>
 {% endblock content %}

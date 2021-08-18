@@ -6,6 +6,10 @@
     width:50%;
     margin: 10px auto;
 }
+.card-user-image{
+    width:20px;
+    height:20px;
+}
 .post-image{
     max-width: 100%;
 }
