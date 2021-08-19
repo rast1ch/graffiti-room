@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from users.models import Artist
 
 
@@ -10,6 +11,10 @@ class Post(models.Model):
     likes = models.PositiveIntegerField(default=1)
     uploaded = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=False)
+
+    def get_absolute_url(self):
+        return reverse("post_detail", kwargs={"slug": self.slug})
+    
 
 
 class Image(models.Model):

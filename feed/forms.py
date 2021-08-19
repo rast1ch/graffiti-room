@@ -12,6 +12,13 @@ class PostModelForm(forms.ModelForm):
         exclude = ['user', 'slug', 'active', 'likes']
 
 
+class PostUpdateForm(forms.ModelForm):
+    description = forms.CharField(widget=forms.Textarea,label="Описание")
+    
+    class Meta:
+        model = Post
+        fields = ('description',)
+
 class ImageForm(forms.ModelForm):
     image = forms.ImageField(label='Image')
 

@@ -1,9 +1,10 @@
 {% extends '_base.html' %}
 {% load static %}
-
-{% block title %}Post{% endblock title %}
+{%block title%}
+Редактирование
+{%endblock title%}
 {% block styles %}
-    <link rel="stylesheet" href="{% static 'css/post_detail.css' %}">
+<link rel="stylesheet" href="{%static 'css/post_update.css'%}">
 {% endblock styles %}
 {% block content %}
     <div class="card">
@@ -19,13 +20,6 @@
             <a class="card-user-name username"
                href="{% url 'artist_posts' object.author.slug %}"> {{ object.author.username }} </a>
         </div>
-        {% if request.user == object.author%}
-        <div class="actions">
-            <a href="{%url 'post_update' object.slug%}" class="change">Изменить</a>
-            <span class="change"> | </span>
-            <a href="{% url 'post_delete' object.slug %}" class="delete">Удалить</a>
-        </div>
-               {%endif%}
         </div>
         <div class="card-image">
             <div id="carouselExampleControls" class="carousel slide images" data-bs-ride="carousel">
@@ -50,9 +44,18 @@
             </div>
         </div>
     <div class="card-content" ><div class="description">
-        <p><a href="{% url 'artist_posts' object.author.slug %}" class="username">{{ object.author.username }}: </a>{{ object.description }}</p>
+        <form action="" method="POST">
+        {% csrf_token %}
+            {%for field in form%}
+                {{field}}
+                {%endfor%}
+            <input type="submit" class="btn btn-warning" value="Подтвердить">
+            
+        </form>
     </div>
-    </div>
-    </div>
-
 {% endblock content %}
+{% comment %} <form action="" method="POST">
+{% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Confirm">
+</form> {% endcomment %}

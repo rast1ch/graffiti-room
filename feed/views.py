@@ -8,12 +8,13 @@ from django.views.generic import (
     DetailView,
     TemplateView,
     RedirectView,
+    UpdateView,
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 import random
 import string
-from .forms import PostModelForm, ImageFormSet
+from .forms import PostModelForm, ImageFormSet,PostUpdateForm
 from django.shortcuts import redirect
 from .models import Image, Post
 
@@ -85,6 +86,14 @@ class PostCreateView(TemplateView, LoginRequiredMixin):
             return HttpResponseRedirect("/feed/")
         else:
             print(postForm.errors, formset.errors)
+
+
+class PostUpdateView(UpdateView):
+    template_name = 'feed/post_update.html'
+    model = Post
+    form_class = PostUpdateForm
+    
+
 
 
 class PostDeleteView(DeleteView, LoginRequiredMixin):
