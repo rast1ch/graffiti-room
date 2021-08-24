@@ -22,7 +22,6 @@ from django.urls import reverse_lazy
 class ArtistCreateView(CreateView):
     form_class = ArtistCreationForm
     model = Artist
-    print(ArtistCreationForm().errors)
     template_name = 'users/registration.html'
     success_url = reverse_lazy('feed')
 
@@ -56,4 +55,5 @@ class UserPostsListView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(UserPostsListView, self).get_context_data(**kwargs)
         context['posts'] = Post.objects.filter(author__username=self.get_object())
+        context['posts_amount'] = Post.objects.filter(author__username=self.get_object()).count()
         return context

@@ -1,0 +1,54 @@
+body{
+    height: 100%;
+}
+.content{
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    width: 70%;
+    margin:auto;
+}
+.profile-image{
+
+    width: 100px;
+    height:100px;
+}
+.username{
+    margin-left: 100px;
+    display: inline-block;
+    font-size:xx-large;
+    font-weight: bold;
+}
+.title{
+    border-bottom: 1px solid lightgray;
+}
+.achievment{
+    height: 70px;
+    text-align: center;
+    border-bottom: 1px solid lightgray;
+}
+#amount{
+    font-size: x-large;
+    margin:0;
+}
+.image{
+    background-color: grey;
+    width: 45px;
+    height: 25px;
+}
+.biography{
+    border-bottom: 1px solid lightgray;
+}
+.item{
+    width: 300px;
+    height: 300px;
+    margin: 5px;
+    border: 1px solid lightgray;
+}
+.posts{
+    
+    width: 100%;
+    display: grid;
+    grid-gap: 8%;
+    justify-content: center;
+    grid-template-columns: auto auto auto;
+}

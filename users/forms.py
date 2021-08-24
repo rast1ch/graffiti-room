@@ -9,12 +9,15 @@ from .models import Artist
 
 
 class ArtistLoginForm(AuthenticationForm):
+    """Форма для входа"""
     username = forms.CharField(max_length=100, label='Логин')
     password = forms.CharField(max_length=100, label='Пароль', widget=forms.PasswordInput)
 
 
 class ArtistCreationForm(UserCreationForm):
-    email = forms.EmailField(max_length=200, error_messages={'unique': "Пользователь с таким E-mail уже зарегистрирован"})
+    """Форма для регистрации"""
+    email = forms.EmailField(max_length=200, error_messages={'unique': "Пользователь с таким E-mail уже зарегистрирован",
+                                                             'invalid': "Проверьте правильность ввода E-mail"})
     password1 = forms.CharField(widget=forms.PasswordInput,
                                 label='Пароль',
                                 help_text='Нужно ввести пароль содержащий 8 или более сиволов',
@@ -45,6 +48,7 @@ class ArtistCreationForm(UserCreationForm):
 
 
 class ArtistChangeForm(UserChangeForm):
+    """Форма для изменнения даных профиля"""
     password = forms.CharField(max_length=60, widget=forms.HiddenInput, required=False)
 
     class Meta:

@@ -1,7 +1,96 @@
-<h1>{{object}}</h1>
+{% extends '_base.html' %}
+{% load static %}
+
+{% block title %}Профиль {{object.username}}{% endblock title %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/profile.css'%}">
+{% endblock styles %}
+
+{% block content %}
+<div class="head">
+    <div class="title">
+        {%if object.profile_image%}
+            <img class="profile-image" src={{object.profile_image.url}} alt="profile-image">
+        {% else %}
+            <img class="profile-image" src={% static 'images/default-avatar.jpg' %} alt="profile-image">
+        {% endif %}
+        <p class="username">{{object.username}}</p>
+    </div>
+    <div class="achievment">
+        <p id="amount">{{posts_amount}}</p>
+        <p id="views">Создано постов</p>
+    </div>
+    <div class="biography">
+        <div class="table1">
+        <table>
+            <tr>
+                <td>Ник: </td>
+                <td>{{object.graffiti_name}}</td>
+            </tr>
+            <tr>
+                
+            </tr>
+            <td>Тэг: </td>
+            <td class="image">{% if object.tag_image %}
+                    <img src="{{object.tag_image.url}}" alt="">
+                {%else%}
+                    
+                {% endif %}</td>
+        </table>
+        </div>
+        <div class="table2">
+            <table>
+                <tr>
+                    <td>Ссылка на Инстаграм: </td>
+                    <td>{% if object.inst_url %}
+                        <a href="{{object.inst_url}}">{{object.inst_url}}</a>
+                {%else%}
+                Не указана
+                    {% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Ссылка на Фейсбук: </td>
+                    <td>{% if object.fb_url %}
+                        <a href="{{object.fb_url}}">{{object.fb_url}}</a>
+                    {%else%}
+                    Не указана
+                    {% endif %}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="posts">
+        {%for post in posts%}
+            <div class="item">
+                <a href="{{post.slug}}">
+                    {% with i=post.images.all|first %}
+                        <img class="post-image card-img" src="{{ i.img.url }}" alt="{{ post.description }}">
+                    {% endwith %}
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="posts">
+
+</div>
+
+{% endblock content %}
+
+
+
+
+
+
+
+
+
+{% comment %} <h1>{{object}}</h1>
 <ul>
 {% for post in posts %}
 <li>{{post.description}}</li>
 {% endfor %}
 </ul>
-123
+123 {% endcomment %}
