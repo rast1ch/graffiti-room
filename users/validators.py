@@ -1,13 +1,18 @@
-from difflib import SequenceMatcher
 import re
-from django.contrib.auth.password_validation import MinimumLengthValidator
-from django.contrib.auth.password_validation import UserAttributeSimilarityValidator
-from django.contrib.auth.password_validation import NumericPasswordValidator
-from django.contrib.auth.password_validation import CommonPasswordValidator
 from django import forms
 from django.core.exceptions import FieldDoesNotExist
 from django.utils.translation import ngettext
+from difflib import SequenceMatcher
+from django.contrib.auth.password_validation import (
+    MinimumLengthValidator,
+    UserAttributeSimilarityValidator,
+    NumericPasswordValidator,
+    CommonPasswordValidator
+)
 
+
+
+#В валидаторах изменен только текст ошибок
 
 class CustomCommonValidator(CommonPasswordValidator):
 

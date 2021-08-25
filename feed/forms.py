@@ -7,6 +7,7 @@ from .models import (
 
 
 class PostModelForm(forms.ModelForm):
+    """Форма для создания постов"""
     description = forms.CharField(label="Описание",widget=forms.Textarea,)
     class Meta:
         model = Post
@@ -14,6 +15,7 @@ class PostModelForm(forms.ModelForm):
 
 
 class PostUpdateForm(forms.ModelForm):
+    """Форма для изменения описания постов"""
     description = forms.CharField(label="Описание",widget=forms.Textarea,)
     
     class Meta:
@@ -21,6 +23,7 @@ class PostUpdateForm(forms.ModelForm):
         fields = ('description',)
 
 class ImageForm(forms.ModelForm):
+    """Форма из формсета для прикрепления изображений к постам"""
     image = forms.ImageField(label='Изображение')
 
     class Meta:

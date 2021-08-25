@@ -4,6 +4,7 @@ from .models import Post
 
 
 class UserRootsRequired:
+    """Миксин совмещающий в себе loginReguiredMixin и проверку пользователя"""
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse('login'))

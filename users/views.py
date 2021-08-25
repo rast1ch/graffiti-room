@@ -43,21 +43,25 @@ class ArtistCreateView(CreateView):
 
 
 class ArtistLoginView(LoginView):
+    """View отвечающее за логин пользователей"""
     form_class = ArtistLoginForm
     template_name = 'users/login.html'
 
 
 class ArtistLogoutView(LogoutView):
+    """View отвечающее за выход пользователей"""
     next_page = reverse_lazy('feed')
 
 
 class ArtistChangeView(LoginRequiredMixin, UserRootsRequired, UpdateView):
+    """View отвечающее за смену данных о пользователе"""
     form_class = ArtistChangeForm
     model = Artist
     template_name = 'users/change.html'
 
 
 class UserPostsListView(LoginRequiredMixin, DetailView):
+    """Посты сгрупированые по одно пользователю + информация по пользователю"""
     model = Artist
     template_name = 'users/profile.html'
 
@@ -69,6 +73,7 @@ class UserPostsListView(LoginRequiredMixin, DetailView):
         try:
             posts_amount = r.get(f'{self.request.user}:posts').decode('UTF-8')
             context['posts_amount'] = posts_amount
+            
         except AttributeError:
             r.append(f'{self.request.user}:posts',
                      Post.objects.filter(author=self.request.user).count())
