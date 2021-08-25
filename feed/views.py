@@ -18,6 +18,12 @@ import string
 from .forms import PostModelForm, ImageFormSet,PostUpdateForm
 from django.shortcuts import redirect
 from .models import Image, Post
+import redis
+from django.conf import settings
+
+r = redis.StrictRedis(host=settings.REDIS_HOST,
+                      port=settings.REDIS_PORT,
+                      db=settings.REDIS_DB)
 
 
 def rand_slug(model):
@@ -84,12 +90,19 @@ class PostCreateView(LoginRequiredMixin, TemplateView):
                     image = form['image']
                     photo = Image(post=post_form, img=image)
                     photo.save()
+            post_amount = Post.objects.filter(author=self.request.user).count()
+            try:
+                r.get(f'{self.request.user}:posts').decode('UTF-8')
+                r.incr(f'{self.request.user}:posts')
+            except AttributeError:
+                r.append(f'{self.request.user}:posts', post_amount)
             return HttpResponseRedirect("/feed/")
         else:
             print(postForm.errors, formset.errors)
 
 
 class PostUpdateView(UserRootsRequired, UpdateView):
+    """View для изменения описания постов"""
     template_name = 'feed/post_update.html'
     model = Post
     form_class = PostUpdateForm
@@ -106,4 +119,5 @@ class PostDeleteView(UserRootsRequired, DeleteView):
 
 
 class FeedRedirectView(RedirectView):
+    """Реализация авто-редиректа с неправильной ссылки"""
     url = reverse_lazy('feed')
