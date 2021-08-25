@@ -7,20 +7,21 @@ from .models import (
 
 
 class PostModelForm(forms.ModelForm):
+    description = forms.CharField(label="Описание",widget=forms.Textarea,)
     class Meta:
         model = Post
-        exclude = ['user', 'slug', 'active', 'likes']
+        exclude = ['author', 'slug', 'active', 'likes']
 
 
 class PostUpdateForm(forms.ModelForm):
-    description = forms.CharField(widget=forms.Textarea,label="Описание")
+    description = forms.CharField(label="Описание",widget=forms.Textarea,)
     
     class Meta:
         model = Post
         fields = ('description',)
 
 class ImageForm(forms.ModelForm):
-    image = forms.ImageField(label='Image')
+    image = forms.ImageField(label='Изображение')
 
     class Meta:
         model = Image

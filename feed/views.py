@@ -12,6 +12,7 @@ from django.views.generic import (
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
+from .mixins import UserRootsRequired
 import random
 import string
 from .forms import PostModelForm, ImageFormSet,PostUpdateForm
@@ -57,7 +58,7 @@ class PostDetailView(DetailView, LoginRequiredMixin):
             return redirect(reverse('feed'))
 
 
-class PostCreateView(TemplateView, LoginRequiredMixin):
+class PostCreateView(LoginRequiredMixin, TemplateView):
     """View для создания постов с поддержкой нескольких картинок"""
 
     def get(self, request, *args, **kwargs):
@@ -73,7 +74,7 @@ class PostCreateView(TemplateView, LoginRequiredMixin):
 
         if postForm.is_valid() and formset.is_valid():
             post_form = postForm.save(commit=False)
-            post_form.user = request.user
+            post_form.author = request.user
             post_form.slug = rand_slug(Post)
             post_form.active = True
             post_form.save()
@@ -88,15 +89,16 @@ class PostCreateView(TemplateView, LoginRequiredMixin):
             print(postForm.errors, formset.errors)
 
 
-class PostUpdateView(UpdateView):
+class PostUpdateView(UserRootsRequired, UpdateView):
     template_name = 'feed/post_update.html'
     model = Post
     form_class = PostUpdateForm
     
+    
 
 
 
-class PostDeleteView(DeleteView, LoginRequiredMixin):
+class PostDeleteView(UserRootsRequired, DeleteView):
     """View для удаления постов"""
     model = Post
     success_url = reverse_lazy('feed')

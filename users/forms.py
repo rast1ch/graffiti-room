@@ -54,7 +54,7 @@ class ArtistChangeForm(UserChangeForm):
     class Meta:
         model = Artist
         fields = [
-            'username', 'graffiti_name',
+            'graffiti_name',
             'profile_image', 'tag_image',
             'inst_url', 'fb_url'
         ]

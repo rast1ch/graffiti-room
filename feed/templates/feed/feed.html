@@ -10,8 +10,8 @@
     {% for post in posts %}
         <div class="card post">
         <div class="card-header">
-        {%if object.author.profile_image%}
-            <img src="{{ object.author.profile_image.url }}"
+        {%if post.author.profile_image%}
+            <img src="{{ post.author.profile_image.url }}"
                  class="card-user-image">
         {%else%}
             <img src="{% static 'images/default-avatar.jpg' %}"

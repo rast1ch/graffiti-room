@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'feed.apps.FeedConfig',
     'users.apps.UsersConfig',
 
+    #Downloaded
+    'crispy_forms',
+
     # Default
     'django.contrib.admin',
     'django.contrib.auth',

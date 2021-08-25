@@ -21,7 +21,7 @@ class Artist(AbstractUser):
     crew = models.ForeignKey(Crew, related_name='artists',blank=True,null=True, on_delete=models.CASCADE)
     
     def get_absolute_url(self):
-        return reverse("artist_detail", kwargs={"slug": self.slug})
+        return reverse("artist_posts", kwargs={"slug": self.slug})
     
 
     class Meta:

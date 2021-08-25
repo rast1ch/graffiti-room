@@ -1,5 +1,17 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block title %}Удалить{% endblock title %}
+{% block styles %}
+<link rel="stylesheet" href="{%static 'css/post_delete.css'%}">
+{% endblock styles %}
+
+{% block content %}
+<div class="confirmation">
 <form method="post">
 {% csrf_token %}
-    <p>Are you sure you want to delete the post?</p>
-    <input type="submit" value="Confirm">
+    <p>Вы уверенны, что хотите удалить эту публикацию?</p>
+    <input type="submit" value="Подтвердить" class="btn btn-danger">
+    <a href="{{view.get_succesfull_url}}" class=""></a>
 </form>
+</div>
+{% endblock content %}

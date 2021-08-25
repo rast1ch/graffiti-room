@@ -1,5 +1,16 @@
-<form method="POST">
-{{form.as_p}}
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}Настройка{% endblock title %}
+
+{% block styles %}
+<link rel="stylesheet" href="{%static 'css/change.css'%}">
+{% endblock styles %}k
+{% block content %}
+<form method="post" action="" enctype="multipart/form-data">
+{{form.as_ul}}
 {% csrf_token %}
-<input type="submit" value="Save">
+<input type="submit" value="Сохранить" class="btn btn-success">
 </form>
+{% endblock content %}
