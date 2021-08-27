@@ -51,7 +51,7 @@ class PostListView(LoginRequiredMixin, ListView):
         return Post.objects.filter(active=True)
 
 
-class PostDetailView(DetailView, LoginRequiredMixin):
+class PostDetailView(LoginRequiredMixin, DetailView):
     """View для просмотра конкретного поста"""
     template_name = 'feed/post_detail.html'
     model = Post
@@ -107,9 +107,6 @@ class PostUpdateView(UserRootsRequired, UpdateView):
     model = Post
     form_class = PostUpdateForm
     
-    
-
-
 
 class PostDeleteView(UserRootsRequired, DeleteView):
     """View для удаления постов"""

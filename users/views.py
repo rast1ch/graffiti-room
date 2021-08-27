@@ -1,9 +1,11 @@
-from django.http.response import HttpResponseRedirect
+from django.http.response import Http404, HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
     DetailView,
     CreateView,
     UpdateView,
+    TemplateView,
+    FormView,
 )
 from django.contrib.auth.views import LoginView, LogoutView
 from .models import Artist
@@ -16,7 +18,10 @@ from .mixins import UserRootsRequired
 from feed.models import Post
 from django.utils.text import slugify
 from django.urls import reverse_lazy
+from django.http import HttpResponseForbidden
 import redis
+import uuid
+from .tasks import send_mail_celery
 from django.conf import settings
 
 # Подключение к Redis
@@ -37,7 +42,11 @@ class ArtistCreateView(CreateView):
         username = form.cleaned_data.get('username')
         form = form.save(commit=False)
         form.slug = slugify(str(username))
+        form.uuid = uuid.uuid4()
+        form.is_active = False
+        send_mail_celery(form.email, form.uuid)
         form.save()
+        
 
         return HttpResponseRedirect(reverse_lazy('feed'))
 
@@ -46,7 +55,7 @@ class ArtistLoginView(LoginView):
     """View отвечающее за логин пользователей"""
     form_class = ArtistLoginForm
     template_name = 'users/login.html'
-
+    
 
 class ArtistLogoutView(LogoutView):
     """View отвечающее за выход пользователей"""
@@ -68,7 +77,7 @@ class UserPostsListView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(UserPostsListView, self).get_context_data(**kwargs)
         context['posts'] = Post.objects.filter(author__username=self.get_object())
-        posts_amount = r.get(f'{self.request.user}:posts').decode('UTF-8')
+        # posts_amount = r.get(f'{self.request.user}:posts').decode('UTF-8')
         
         try:
             posts_amount = r.get(f'{self.request.user}:posts').decode('UTF-8')
@@ -77,5 +86,25 @@ class UserPostsListView(LoginRequiredMixin, DetailView):
         except AttributeError:
             r.append(f'{self.request.user}:posts',
                      Post.objects.filter(author=self.request.user).count())
-            context['posts_amount'] = r.get(f'{self.request.user}:posts')
+            context['posts_amount'] = r.get(f'{self.request.user}:posts').decode('UTF-8')
         return context
+
+class ArtistConfirmView(TemplateView):
+    """View для подтверждения электронной почты"""
+    template_name = 'users/confirm.html'
+
+    def get(self,request,*args, **kwargs):
+        user_uuid = self.kwargs.get('uuid')
+        try:
+            user = Artist.objects.get(uuid=user_uuid)
+            if user.is_active:
+                return HttpResponseForbidden()
+            else:
+                user.is_active = True
+                user.save()
+                return super(ArtistConfirmView,self).get(request,*args, **kwargs)
+        except Artist.DoesNotExist:
+            return Http404()
+    
+class ArtistPasswordChange(FormView):
+    pass
