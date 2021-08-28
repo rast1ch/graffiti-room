@@ -12,5 +12,6 @@
 {{form.as_ul}}
 {% csrf_token %}
 <input type="submit" value="Сохранить" class="btn btn-success">
+<a href="{% url 'reset'%}">Сброс пароля</a>
 </form>
 {% endblock content %}

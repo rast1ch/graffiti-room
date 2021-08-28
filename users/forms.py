@@ -3,6 +3,8 @@ from django.contrib.auth.forms import (
     UserCreationForm,
     UserChangeForm,
     AuthenticationForm,
+    SetPasswordForm,
+    PasswordResetForm
 )
 from django.core.exceptions import ValidationError
 from .models import Artist
@@ -58,3 +60,7 @@ class ArtistChangeForm(UserChangeForm):
             'profile_image', 'tag_image',
             'inst_url', 'fb_url'
         ]
+
+
+class EmailForm(forms.Form):
+    email = forms.EmailField(label='E-mail')
