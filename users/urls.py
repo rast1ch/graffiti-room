@@ -8,7 +8,9 @@ from .views import (
     ArtistConfirmView,
     ArtistResetPassword,
     ArtistChangePassword,
-    ArtistChangePasswordWithEmail
+    ArtistChangePasswordWithEmail,
+    ArtistChangeForgottenPassword,
+    
 )
 
 urlpatterns = [
@@ -19,6 +21,7 @@ urlpatterns = [
     path('forgot_password',ArtistChangePasswordWithEmail.as_view(), name="forgot"),
     path('verify/<uuid:uuid>', ArtistConfirmView.as_view(), name="confirm"),
     path('change_password/<uuid:uuid>', ArtistChangePassword.as_view(), name="change_password"),
+    path('reset_password/<uuid:uuid>',ArtistChangeForgottenPassword.as_view(), name="change_forgotten_password"),
     path('<slug:slug>/change', ArtistChangeView.as_view(), name="change"),
     path('<slug:slug>/', UserPostsListView.as_view(), name="artist_posts"),
 ]

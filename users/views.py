@@ -105,7 +105,7 @@ class ArtistChangePasswordWithEmail(FormView):
             email = Artist.objects.get(email=email)
             temp_uuid = uuid.uuid4()
             subject,link = ["Смена пароля",
-                            f'http://localhost:8000/account/change_password/{temp_uuid}']
+                            f'http://localhost:8000/account/reset_password/{temp_uuid}']
             message = f"Для смены пароля, нужно перейти по ссылке {link}"
             r.append(f'{temp_uuid}', email.email)
             r.expire(f'{temp_uuid}', 600)
@@ -166,6 +166,16 @@ class ArtistChangePassword(FormView):
     def get(self,request,*args, **kwargs):
         return super(ArtistChangePassword, self).get(request, *args, **kwargs)
 
+class ArtistChangeForgottenPassword(ArtistChangePassword):
+    
+    @property
+    def user(self):
+        temp_uuid = self.kwargs.get('uuid')
+        try:
+            email = r.get(f'{temp_uuid}').decode('UTF-8')
+            return Artist.objects.get(email__exact=email)
+        except AttributeError:
+            return HttpResponseForbidden()
 
 class ArtistConfirmView(TemplateView):
     """View для подтверждения электронной почты"""
