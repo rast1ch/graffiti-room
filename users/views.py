@@ -46,7 +46,7 @@ class ArtistCreateView(CreateView):
         form.uuid = uuid.uuid4()
         form.is_active = False
         subject,link = ["Подтверждение адресса электронной почты",
-                                f'http://localhost:8000/account/verify/{uuid}']
+                                f'http://localhost:8000/account/verify/{form.uuid}']
         message = f"Для подтвержения адресса электронной почты, нужно перейти по ссылке {link}"
         send_mail_celery(subject, message, form.email)
         form.save()

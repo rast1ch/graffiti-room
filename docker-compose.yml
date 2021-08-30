@@ -1,13 +1,42 @@
 version: "3.9"
    
 services:
-  web:
+  app:
     build: .
-    command: python manage.py runserver localhost:8000
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
+    environment: 
+      - POSTGRES_HOST=db
+      - POSTGRES_DB=app
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=supersecretpassword
     ports:
       - "8000:8000"
+    depends_on: 
+      - db
   
+  db:
+    image: postgres:10-alpine
+    environment:
+      - POSTGRES_DB=app
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=supersecretpassword
   redis:
-    image: "redis:alpine"
+    image: redis:alpine
+  celery:
+    restart: always
+    build:
+      context: .
+    command: celery -A graffiti_room_0 worker -l info
+    volumes:
+      - ./app:/app
+    environment:
+      - DB_HOST=db
+      - DB_NAME=app
+      - DB_USER=postgres
+      - DB_PASS=supersecretpassword
+    depends_on:
+      - db
+      - redis
+      - app
