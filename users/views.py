@@ -59,7 +59,7 @@ class ArtistLoginView(LoginView):
     """View отвечающее за логин пользователей"""
     form_class = ArtistLoginForm
     template_name = 'users/login.html'
-    
+    success_url = reverse_lazy('feed')
 
 class ArtistLogoutView(LogoutView):
     """View отвечающее за выход пользователей"""
@@ -167,6 +167,7 @@ class ArtistChangePassword(FormView):
         return super(ArtistChangePassword, self).get(request, *args, **kwargs)
 
 class ArtistChangeForgottenPassword(ArtistChangePassword):
+    success_url = reverse_lazy('feed')
     
     @property
     def user(self):
