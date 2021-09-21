@@ -63,7 +63,7 @@
     <div class="posts">
         {%for post in posts%}
             <div class="item">
-                <a href="{{post.slug}}">
+                <a href="{% url 'post_detail' post.slug%}">
                     {% with i=post.images.all|first %}
                         <img class="post-image card-img" src="{{ i.img.url }}" alt="{{ post.description }}">
                     {% endwith %}

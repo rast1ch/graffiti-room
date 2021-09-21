@@ -89,7 +89,7 @@ class UserPostsListView(LoginRequiredMixin, DetailView):
             
         except AttributeError:
             r.append(f'{self.request.user}:posts',
-                     Post.objects.filter(author=self.request.user).count())
+                     Post.objects.filter(author__slug=self.kwargs.get('slug')).count())
             context['posts_amount'] = r.get(f'{self.request.user}:posts').decode('UTF-8')
         return context
 

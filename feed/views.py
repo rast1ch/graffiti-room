@@ -114,6 +114,10 @@ class PostDeleteView(UserRootsRequired, DeleteView):
     success_url = reverse_lazy('feed')
     template_name = 'feed/post_delete.html'
 
+    def post(self, request, *args: str, **kwargs):
+        r.decr(f'{self.request.user}:posts')
+        return super().post(request, *args, **kwargs)
+
 
 class FeedRedirectView(RedirectView):
     """Реализация авто-редиректа с неправильной ссылки"""

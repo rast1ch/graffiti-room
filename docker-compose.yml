@@ -1,6 +1,12 @@
 version: "3.9"
    
 services:
+  db:
+    image: postgres:10-alpine
+    environment:
+      - POSTGRES_DB=app
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=supersecretpassword
   app:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
@@ -11,17 +17,13 @@ services:
       - POSTGRES_DB=app
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=supersecretpassword
+      - AWS_ACCESS_ID_KEY=AKIAYIRLRVBBQDQPP27D
+      - AWS_SECRET_ACCESS_KEY=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
+      - AWS_BUCKET_NAME=link-shorter-rastich
     ports:
       - "8000:8000"
     depends_on: 
       - db
-  
-  db:
-    image: postgres:10-alpine
-    environment:
-      - POSTGRES_DB=app
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=supersecretpassword
   redis:
     image: redis:alpine
   celery:
